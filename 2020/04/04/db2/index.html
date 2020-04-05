@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://YHE3YAO.github.io"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "mlpxy22hfwmz8zjzhdhg6bkvk88dn6w0l6n5ey01"
+    });
+  daovoice('update');
+  </script>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yhe3yao.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="数据库：db2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="db2">
+<meta property="og:url" content="https://yhe3yao.github.io/2020/04/04/db2/index.html">
+<meta property="og:site_name" content="YHE3YAO">
+<meta property="og:description" content="数据库：db2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%94%AF%E6%8C%81%E7%9A%84%E5%B9%B3%E5%8F%B0.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E7%89%88%E6%9C%AC.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/DB2_Connect.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%AE%80%E5%9B%BE.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/root%E7%94%A8%E6%88%B7%E5%88%87%E6%8D%A2%E5%88%B0db2%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E4%BE%8B%E7%AE%A1%E7%90%86%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E4%BE%8B%E7%AE%A1%E7%90%86%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E5%BA%932.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9B%E5%BB%BA%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BF%A1%E6%81%AF.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/DB2%E4%BA%A7%E5%93%81.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B%E7%9A%84%E8%AF%AD%E6%B3%95Linux&Unix.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B%E7%9A%84%E8%AF%AD%E6%B3%95Windows.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%90%AF%E5%8A%A8%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E8%BF%9E%E6%8E%A5%E5%92%8C%E6%96%AD%E5%BC%80%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%81%9C%E6%AD%A2%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%AE%9E%E4%BE%8B%E5%8F%82%E6%95%B0.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%A0%E9%99%A4%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E4%BC%98%E5%85%88%E7%BA%A7.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E7%AE%A1%E7%90%86%E5%AE%9E%E4%BE%8B%E6%B3%A8%E5%86%8C%E5%8F%98%E9%87%8F.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%AE%9E%E4%BE%8B%E7%9B%AE%E5%BD%95_%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BD%9C%E7%94%A8.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%AE%9E%E4%BE%8B%E7%9B%AE%E5%BD%95%E7%9A%84%E5%86%85%E5%AE%B9.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/DAS.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81%E8%A1%A8%E7%A9%BA%E9%97%B4%E3%80%81%E8%A1%A8%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E3%80%81%E5%AE%B9%E5%99%A8%E3%80%81%E5%8C%BA%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A1%B5.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%AE%B9%E5%99%A8%E4%B8%8E%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E8%AF%AD%E6%B3%95.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%90%8D%E7%A7%B0%E5%92%8C%E5%88%86%E5%8C%BA.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%87%AA%E5%8A%A8%E5%AD%98%E5%82%A8%E7%9A%84%E4%BD%8D%E7%BD%AE1_1.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%87%AA%E5%8A%A8%E5%AD%98%E5%82%A8%E7%9A%84%E4%BD%8D%E7%BD%AE1_2.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%AB%E5%90%8D%E3%80%81%E4%BB%A3%E7%A0%81%E9%A1%B5%E5%92%8C%E6%95%B4%E7%90%86%E6%AC%A1%E5%BA%8F.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E9%A1%B5%E4%B8%8E%E9%BB%98%E8%AE%A4%E5%8C%BA%E7%9A%84%E5%A4%A7%E5%B0%8F.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E9%BB%98%E8%AE%A4%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%86%E5%8C%BA%E5%85%A8%E5%B1%80%E7%9B%AE%E5%BD%95.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E7%89%B9%E5%AE%9A%E6%88%90%E5%91%98%E7%9B%AE%E5%BD%95.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E4%BD%9C%E7%94%A8.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/SMS%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/DMS%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AF%AD%E6%B3%95_1.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AF%AD%E6%B3%95_2.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%8C%87%E5%AE%9A%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%90%8D%E7%A7%B0.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%8C%BA%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E9%A1%B5%E5%A4%A7%E5%B0%8F.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E5%AD%98%E5%82%A8%E7%9A%84%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F%E5%92%8C%E5%8C%BA%E5%A4%A7%E5%B0%8F.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E9%A2%84%E5%8F%96%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F%E4%B8%8E%E7%BC%93%E5%86%B2%E6%B1%A0.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%BC%80%E9%94%80%E5%92%8C%E4%BC%A0%E9%80%81%E9%80%9F%E7%8E%87.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%92%8C%E5%B7%B2%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84%E6%81%A2%E5%A4%8D.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%AE%B9%E5%99%A8.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E4%BF%AE%E6%94%B9%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%B7%BB%E5%8A%A0%E5%AE%B9%E5%99%A8.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%89%A9%E5%B1%95%E5%AE%B9%E5%99%A8.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%A0%E9%99%A4%E8%A1%A8%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%88%A0%E9%99%A4%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%A4%87%E4%BB%BD%E7%9A%84%E5%B1%82%E7%BA%A7.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%8F%98%E9%87%8F%E5%A2%9E%E9%87%8F%EF%BC%88Delta%EF%BC%89%E5%A4%87%E4%BB%BD.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%A4%87%E4%BB%BD%E7%9A%84%E7%BB%BC%E5%90%88%E4%BD%BF%E7%94%A8.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%81%A2%E5%A4%8D%E7%9A%84%E7%B1%BB%E5%9E%8B.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%B4%A9%E6%BA%83%E6%81%A2%E5%A4%8D.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E7%89%88%E6%9C%AC%E6%81%A2%E5%A4%8D.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E5%89%8D%E6%BB%9A%E6%81%A2%E5%A4%8D.png">
+<meta property="og:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E5%8A%A1">
+<meta property="article:published_time" content="2020-04-04T04:09:39.000Z">
+<meta property="article:modified_time" content="2020-04-04T16:01:55.570Z">
+<meta property="article:author" content="YHE3YAO">
+<meta property="article:tag" content="db2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yhe3yao.github.io/2020/04/04/db2/%E6%94%AF%E6%8C%81%E7%9A%84%E5%B9%B3%E5%8F%B0.png">
+
+<link rel="canonical" href="https://yhe3yao.github.io/2020/04/04/db2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>db2 | YHE3YAO</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a href="https://github.com/YHE3YAO" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">YHE3YAO</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yhe3yao.github.io/2020/04/04/db2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="YHE3YAO">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YHE3YAO">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          db2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-04 12:09:39" itemprop="dateCreated datePublished" datetime="2020-04-04T12:09:39+08:00">2020-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-05 00:01:55" itemprop="dateModified" datetime="2020-04-05T00:01:55+08:00">2020-04-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>数据库：db2</p>
+<a id="more"></a>
+
+<h1 id="DB2简介"><a href="#DB2简介" class="headerlink" title="DB2简介"></a>DB2简介</h1><ul>
+<li><p>IBM公司的数据库系统</p>
+</li>
+<li><p>关系型数据库系统</p>
+</li>
+<li><p>适用于大型应用系统，如：某企业门户网站，商务智能系统.</p>
+</li>
+<li><p>支持大多数主流操作系统，如：Windows,Linux,AIX.</p>
+</li>
+<li><p>与平台无关的基本功能和SQL语句.</p>
+<blockquote>
+<p>补充知识：IBM的主机体系简介</p>
+<p>System Zero(大型机)，System Performance(小型机)，System Integrated.</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="DB2支持的平台及版本"><a href="#DB2支持的平台及版本" class="headerlink" title="DB2支持的平台及版本"></a>DB2支持的平台及版本</h1><h2 id="支持的平台"><a href="#支持的平台" class="headerlink" title="支持的平台"></a>支持的平台</h2><p><img src="/2020/04/04/db2/%E6%94%AF%E6%8C%81%E7%9A%84%E5%B9%B3%E5%8F%B0.png" alt="支持的平台"></p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><img src="/2020/04/04/db2/%E7%89%88%E6%9C%AC.png" alt="版本"></p>
+<h1 id="DB2主要的产品组件及功能"><a href="#DB2主要的产品组件及功能" class="headerlink" title="DB2主要的产品组件及功能"></a>DB2主要的产品组件及功能</h1><p><img src="/2020/04/04/db2/DB2_Connect.png" alt="DB2_Connect"></p>
+<p>DB2 Connect Application Server Advanced Editon (DB2 Connect 应用服务器高级版)</p>
+<p>DB2 Connect Application Server Edition(DB2 Connect 应用服务器版)</p>
+<p>DB2 Connect Enterprise Editon (DB2 Connect 企业版)</p>
+<h1 id="DB2体系结构简介"><a href="#DB2体系结构简介" class="headerlink" title="DB2体系结构简介"></a>DB2体系结构简介</h1><h2 id="DB2体系结构简图"><a href="#DB2体系结构简图" class="headerlink" title="DB2体系结构简图"></a>DB2体系结构简图</h2><p><img src="/2020/04/04/db2/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%AE%80%E5%9B%BE.png" alt="体系结构简图"></p>
+<ol>
+<li>一个数据库实例可以管理一到多个数据库。实例&gt;数据库</li>
+<li>数据库由一到多个表空间组成。数据库&gt;表空间</li>
+<li>表存储在表空间中。表空间&gt;表</li>
+</ol>
+<h2 id="数据库管理实例"><a href="#数据库管理实例" class="headerlink" title="数据库管理实例"></a>数据库管理实例</h2><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E5%AE%9E%E4%BE%8B.png" alt="数据库管理实例"></p>
+<ol>
+<li><p>不同版本的DB2产品可以共存于同一套操作系统。一个操作系统可以安装多个DB2。</p>
+</li>
+<li><p>每个DB2产品可以创建一到多个实例。一个DB2可以创建多个实例。</p>
+</li>
+<li><p>每个数据库实例都有自己的配置文件。每个实例自定义配置自己的配置文件。</p>
+<p><strong>实例：逻辑意义上存在的概念，只有配置文件，不占用物理内存。</strong></p>
+</li>
+</ol>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="数据库"></p>
+<ol>
+<li>数据库必须受实例的管理。</li>
+<li>在<strong>非集群</strong>的情况下，一个数据库只能受一个实例的管理。</li>
+<li>每个数据库都有自己的配置文件。</li>
+</ol>
+<h2 id="表空间"><a href="#表空间" class="headerlink" title="表空间"></a>表空间</h2><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="表空间"></p>
+<ol>
+<li>数据库由一到多个表空间组成。</li>
+<li>表空间用于存储<strong>数据库对象</strong>，比如：表，索引等。</li>
+</ol>
+<h2 id="表"><a href="#表" class="headerlink" title="表"></a>表</h2><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="表"></p>
+<ol>
+<li>表用于存储用户数据。</li>
+<li>表位于表空间中。</li>
+</ol>
+<h2 id="示例—查看各组件"><a href="#示例—查看各组件" class="headerlink" title="示例—查看各组件"></a>示例—查看各组件</h2><ol>
+<li>查看实例</li>
+<li>查看数据库</li>
+<li>查看表空间</li>
+</ol>
+<ul>
+<li>root用户切换到db2实例用户：su - db2inst1[实例用户名称]</li>
+<li>查看数据库版本：db2level</li>
+</ul>
+<p><img src="/2020/04/04/db2/root%E7%94%A8%E6%88%B7%E5%88%87%E6%8D%A2%E5%88%B0db2%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="root用户切换到db2实例"></p>
+<ul>
+<li>查看数据产品创建有多少个实例：db2ilist</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E4%BE%8B.png" alt="查看数据库实例"></p>
+<ul>
+<li>查看当前数据库实例管理哪些数据库：db2 list db directory</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E4%BE%8B%E7%AE%A1%E7%90%86%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="查看当前数据库实例管理哪些数据库"></p>
+<ul>
+<li>数据库信息[sample]</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E4%BE%8B%E7%AE%A1%E7%90%86%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E5%BA%932.png" alt="查看当前数据库实例管理哪些数据库2"></p>
+<ul>
+<li>连接数据库：db2 connect to sample</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="连接数据库"></p>
+<ul>
+<li>查看数据库创建有多少个实例：db2 list tablespaces</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9B%E5%BB%BA%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA%E5%AE%9E%E4%BE%8B.png" alt="查看数据库创建有多少个表空间"></p>
+<ul>
+<li>表空间信息</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BF%A1%E6%81%AF.png" alt="表空间信息"></p>
+<h1 id="DB2实例与管理服务器"><a href="#DB2实例与管理服务器" class="headerlink" title="DB2实例与管理服务器"></a>DB2实例与管理服务器</h1><h2 id="理解实例"><a href="#理解实例" class="headerlink" title="理解实例"></a>理解实例</h2><h3 id="实例的概念"><a href="#实例的概念" class="headerlink" title="实例的概念"></a>实例的概念</h3><p><img src="/2020/04/04/db2/%E5%AE%9E%E4%BE%8B.png" alt="实例.png"></p>
+<ul>
+<li>实例为数据库提供了运行时环境。</li>
+<li>实例是由一组后台进程和共享内存组成的。</li>
+<li>数据库是物理的，而实例是逻辑的。</li>
+</ul>
+<h3 id="创建几个实例合适"><a href="#创建几个实例合适" class="headerlink" title="创建几个实例合适"></a>创建几个实例合适</h3><p><img src="/2020/04/04/db2/DB2%E4%BA%A7%E5%93%81.png" alt="DB2产品.png"></p>
+<ul>
+<li>一个DB2产品可以创建多个实例。</li>
+<li>每个实例都有自己的配置文件。</li>
+<li>每个实例都有自己独立的共享内存和进程结构</li>
+<li>实际生产系统中，实例的个数选择要适情况而定。</li>
+</ul>
+<h2 id="管理实例"><a href="#管理实例" class="headerlink" title="管理实例"></a>管理实例</h2><h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><h4 id="实例与操作系统用户的关系"><a href="#实例与操作系统用户的关系" class="headerlink" title="实例与操作系统用户的关系"></a>实例与操作系统用户的关系</h4><ul>
+<li><p>Windows:不需要创建用户，默认实例名为DB2.</p>
+</li>
+<li><p>Linux&amp;Unix:实例名与用户名一样</p>
+<p><strong>注意：确保用户状态正常</strong></p>
+</li>
+</ul>
+<h4 id="创建实例的语法—Linux-amp-Unix"><a href="#创建实例的语法—Linux-amp-Unix" class="headerlink" title="创建实例的语法—Linux&amp;Unix"></a>创建实例的语法—Linux&amp;Unix</h4><p><img src="/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B%E7%9A%84%E8%AF%AD%E6%B3%95Linux&Unix.png" alt="创建实例的语法Linux&amp;Unix.png"></p>
+<h4 id="创建实例的语法—Windows"><a href="#创建实例的语法—Windows" class="headerlink" title="创建实例的语法—Windows"></a>创建实例的语法—Windows</h4><p><img src="/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B%E7%9A%84%E8%AF%AD%E6%B3%95Windows.png" alt="创建实例的语法Windows.png"></p>
+<h4 id="创建实例示例"><a href="#创建实例示例" class="headerlink" title="创建实例示例"></a>创建实例示例</h4><ul>
+<li><p>Linux&amp;Unix 上创建实例：</p>
+<p>DB2DIR/instance/db2icrt -u FencedID InstName</p>
+</li>
+<li><p>Windows 上创建实例：</p>
+<p>DB2DIR\bin\db2icrt InstName</p>
+</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B.png" alt="创建实例.png"></p>
+<h3 id="启动实例"><a href="#启动实例" class="headerlink" title="启动实例"></a>启动实例</h3><ul>
+<li>启动实例：连接数据库、编译应用程序、绑定程序包等</li>
+<li>启动实例必须具有相应的权限</li>
+<li>启动实例的命令： db2start</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E5%90%AF%E5%8A%A8%E5%AE%9E%E4%BE%8B.png" alt="启动实例.png"></p>
+<h3 id="连接和断开实例"><a href="#连接和断开实例" class="headerlink" title="连接和断开实例"></a>连接和断开实例</h3><ul>
+<li>连接实例的命令：db2 attach to INSTName</li>
+<li>断开实例的命令：db2 detach</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E8%BF%9E%E6%8E%A5%E5%92%8C%E6%96%AD%E5%BC%80%E5%AE%9E%E4%BE%8B.png" alt="连接和断开实例.png"></p>
+<h3 id="停止实例"><a href="#停止实例" class="headerlink" title="停止实例"></a>停止实例</h3><ul>
+<li>停止实例必须具有相应的权限</li>
+<li>停止实例的命令： db2stop</li>
+<li>强制应用程序与用户与数据库断开：db2stop force</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E5%81%9C%E6%AD%A2%E5%AE%9E%E4%BE%8B.png" alt="停止实例.png"></p>
+<h3 id="实例参数"><a href="#实例参数" class="headerlink" title="实例参数"></a>实例参数</h3><ul>
+<li>查看实例参数： db2 get dbm cfg</li>
+<li>修改实例参数： db2 update dbm cfg using 参数名 参数值</li>
+<li>复位实例参数为默认值： db2 reset dbm cfg</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E5%AE%9E%E4%BE%8B%E5%8F%82%E6%95%B0.png" alt="实例参数.png"></p>
+<h3 id="删除实例"><a href="#删除实例" class="headerlink" title="删除实例"></a>删除实例</h3><ul>
+<li>删除实例，必须具有root或者系统管理员权限</li>
+<li>删除实例前，要确保实例已经停止</li>
+<li>删除实例的命令： db2idrop</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E5%88%A0%E9%99%A4%E5%AE%9E%E4%BE%8B.png" alt="删除实例.png"></p>
+<h3 id="操作实例的其他命令"><a href="#操作实例的其他命令" class="headerlink" title="操作实例的其他命令"></a>操作实例的其他命令</h3><ul>
+<li>查看实例：db2ilist</li>
+<li>更新实例：db2iupdt</li>
+<li>迁移实例：db2imigr</li>
+<li>自动启动实例：db2iauto</li>
+</ul>
+<h2 id="DB2的环境变量"><a href="#DB2的环境变量" class="headerlink" title="DB2的环境变量"></a>DB2的环境变量</h2><h3 id="环境变量的优先级"><a href="#环境变量的优先级" class="headerlink" title="环境变量的优先级"></a>环境变量的优先级</h3><p><img src="/2020/04/04/db2/%E4%BC%98%E5%85%88%E7%BA%A7.png" alt="优先级.png"></p>
+<ul>
+<li><p>操作系统级别的环境变量</p>
+<p>–使用set 或者 export设置</p>
+</li>
+<li><p>全局级概要文件注册变量</p>
+<p>–使用db2set -g 设置</p>
+</li>
+<li><p>实例级概要文件注册变量</p>
+<p>–使用db2set -i 设置</p>
+</li>
+<li><p>实例节点级概要文件注册变量</p>
+<p>–使用 db2set -i <instance name><nodenum>命令</nodenum></instance></p>
+</li>
+</ul>
+<h3 id="管理实例注册变量"><a href="#管理实例注册变量" class="headerlink" title="管理实例注册变量"></a>管理实例注册变量</h3><p><img src="/2020/04/04/db2/%E7%AE%A1%E7%90%86%E5%AE%9E%E4%BE%8B%E6%B3%A8%E5%86%8C%E5%8F%98%E9%87%8F.png" alt="管理实例注册变量.png"></p>
+<ul>
+<li>管理实例变量的命令：db2set</li>
+<li>查看已经设置的实例变量：db2set -all</li>
+<li>查看所有可进行定义的实例变量：db2set -lr</li>
+</ul>
+<h2 id="实例目录"><a href="#实例目录" class="headerlink" title="实例目录"></a>实例目录</h2><h3 id="概念与作用"><a href="#概念与作用" class="headerlink" title="概念与作用"></a>概念与作用</h3><p><img src="/2020/04/04/db2/%E5%AE%9E%E4%BE%8B%E7%9B%AE%E5%BD%95_%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BD%9C%E7%94%A8.png" alt="实例目录_概念与作用.png"></p>
+<ul>
+<li>存储于数据库实例相关的所有信息</li>
+<li>实例创建后，自动生成实例目录</li>
+<li>在Linux或Unix上，实例目录位于User_home/sqllib目录中</li>
+<li>在Windos上，实例目录位于db2数据库产品的sqllib目录中</li>
+</ul>
+<h3 id="实例目录的内容"><a href="#实例目录的内容" class="headerlink" title="实例目录的内容"></a>实例目录的内容</h3><p><img src="/2020/04/04/db2/%E5%AE%9E%E4%BE%8B%E7%9B%AE%E5%BD%95%E7%9A%84%E5%86%85%E5%AE%B9.png" alt="实例目录的内容"></p>
+<h2 id="管理服务器"><a href="#管理服务器" class="headerlink" title="管理服务器"></a>管理服务器</h2><h3 id="概念与作用-1"><a href="#概念与作用-1" class="headerlink" title="概念与作用"></a>概念与作用</h3><p><img src="/2020/04/04/db2/DAS.png" alt="DAS.png"></p>
+<ul>
+<li>数据库管理服务器DAS(Database Administration Server)是一个特殊的数据库实例</li>
+<li>用于执行远程的DB2数据库管理任务</li>
+<li>DAS和受管实例是一对多的关系，即一个DAS可以管理多个实例</li>
+</ul>
+<h3 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h3><ul>
+<li>用于启动DAS: db2admin start </li>
+<li>用于终止DAS: db2admin stop</li>
+<li>在Linux&amp;Unix环境下创建DAS: dasicrt</li>
+<li>在Linux&amp;Unix环境下删除DAS: dasidrop</li>
+<li>在Windows环境下创建DAS: db2admin create</li>
+<li>在Windows环境下删除DAS: db2admin drop</li>
+<li>用于显示DAS的数据库管理器配置：db2 get admin cfg</li>
+<li>用于更改DAS的数据库管理器配置文件的参数：db2 update admin cfg</li>
+<li>用于将DAS的配置参数设置为默认值：db2 reset admin cfg</li>
+</ul>
+<h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><ol>
+<li><p>查看db2icrt 和 db2idrop 所在的路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;opt&#x2F;ibm&#x2F;db2&#x2F;V10.5</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查是否创建了受防护的用户和实例用户，并且设置密码</p>
+</li>
+<li><p>在创建实例前，查看home路径下是否有sqllib</p>
+</li>
+<li><p>创建实例</p>
+</li>
+<li><p>检查sqllib目录是否创建成功</p>
+</li>
+<li><p>启动实例：db2start</p>
+</li>
+<li><p>连接到实例：db2 attach to db2inst1</p>
+</li>
+<li><p>从实例中断开： db2detach</p>
+</li>
+<li><p>停止实例： db2stop</p>
+</li>
+<li><p>启动实例并且创建一个测试数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db2 start</span><br><span class="line">db2 create db test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>额外用一个用户连接实例，再停止实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db2 connect to test</span><br><span class="line">db2stop</span><br><span class="line">db2 stop force</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看实例的参数： db2 get dbm cfg</p>
+</li>
+<li><p>修改参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db2 update dbm cfg using ASLHEAPSZ 20</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除实例： db2idrop db2inst1</p>
+</li>
+<li><p>检查sqllib目录是否还存在</p>
+</li>
+</ol>
+<h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><h2 id="建库前的准备"><a href="#建库前的准备" class="headerlink" title="建库前的准备"></a>建库前的准备</h2><h3 id="数据库、表空间、表的关系"><a href="#数据库、表空间、表的关系" class="headerlink" title="数据库、表空间、表的关系"></a>数据库、表空间、表的关系</h3><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81%E8%A1%A8%E7%A9%BA%E9%97%B4%E3%80%81%E8%A1%A8%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="数据库、表空间、表的关系.png"></p>
+<ul>
+<li>数据库由实例进行创建和管理</li>
+<li>数据库包含一到多个表空间</li>
+<li>表存储在表空间</li>
+</ul>
+<h3 id="表空间、容器、区与数据页"><a href="#表空间、容器、区与数据页" class="headerlink" title="表空间、容器、区与数据页"></a>表空间、容器、区与数据页</h3><p><img src="/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E3%80%81%E5%AE%B9%E5%99%A8%E3%80%81%E5%8C%BA%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A1%B5.png" alt="表空间、容器、区与数据页.png"></p>
+<ul>
+<li>表空间有一到多个容器组成</li>
+<li>表空间容器（Container）是由多个区组成的</li>
+<li>区(extent)有整体倍的数据页组成</li>
+<li>数据库的最小存储单位是数据页（datapage）</li>
+</ul>
+<h3 id="容器与表空间"><a href="#容器与表空间" class="headerlink" title="容器与表空间"></a>容器与表空间</h3><p><img src="/2020/04/04/db2/%E5%AE%B9%E5%99%A8%E4%B8%8E%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="容器与表空间.png"></p>
+<ul>
+<li>表、索引等逻辑对象放在表空间</li>
+<li>容器是位于底层的物理存储</li>
+<li>表空间是数据库物理存储于逻辑存储的统一</li>
+<li>容器可以是目录、文件或者设备</li>
+</ul>
+<h2 id="使用命令行创建数据库"><a href="#使用命令行创建数据库" class="headerlink" title="使用命令行创建数据库"></a>使用命令行创建数据库</h2><h3 id="创建数据库的语法"><a href="#创建数据库的语法" class="headerlink" title="创建数据库的语法"></a>创建数据库的语法</h3><p><img src="/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E8%AF%AD%E6%B3%95.png" alt="创建数据库的语法"></p>
+<h3 id="数据库的名称和分区"><a href="#数据库的名称和分区" class="headerlink" title="数据库的名称和分区"></a>数据库的名称和分区</h3><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%90%8D%E7%A7%B0%E5%92%8C%E5%88%86%E5%8C%BA.png" alt="数据库的名称和分区"></p>
+<ul>
+<li>database-name 指定数据库的名称</li>
+<li>AT DBPARTIONNUM 用于指定在哪个数据库的分区恢复数据库</li>
+<li>最简单的建库命令： create database database_name</li>
+</ul>
+<h3 id="数据库和自动存储的位置（1）"><a href="#数据库和自动存储的位置（1）" class="headerlink" title="数据库和自动存储的位置（1）"></a>数据库和自动存储的位置（1）</h3><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%87%AA%E5%8A%A8%E5%AD%98%E5%82%A8%E7%9A%84%E4%BD%8D%E7%BD%AE1_1.png" alt="数据库和自动存储的位置1_1.png"></p>
+<p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%87%AA%E5%8A%A8%E5%AD%98%E5%82%A8%E7%9A%84%E4%BD%8D%E7%BD%AE1_2.png" alt="数据库和自动存储的位置1_2.png"></p>
+<h3 id="数据库和自动存储的位置（2）"><a href="#数据库和自动存储的位置（2）" class="headerlink" title="数据库和自动存储的位置（2）"></a>数据库和自动存储的位置（2）</h3><ul>
+<li><p>create database jikedb1 on /jikedb1</p>
+<p>—数据库路径： /jikedb1</p>
+<p>—自动存储路径： /jikedb1</p>
+</li>
+<li><p>create database jikedb2 automatic storage no on /jikedb2</p>
+<p>—数据库路径： /jikedb2</p>
+<p>—未使用自动存储特性</p>
+</li>
+<li><p>create database jikedb3 on /jikedbauto3 dbpath on /jikedb3</p>
+<p>—数据库路径： /jikedb3</p>
+<p>—自动存储路径： /jikedbauto3</p>
+</li>
+<li><p>create database jikedb4  automatic storage yes on</p>
+<p>/jikedbauto41,/jikedbauto42,/jikedbauto43 dbpath on /jikedb4</p>
+<p>—数据库路径： /jikedb4</p>
+<p>—自动存储路径： /jikedbauto41,/jikedbauto42,/jikedbauto43</p>
+</li>
+</ul>
+<h3 id="别名、代码页和整理次序"><a href="#别名、代码页和整理次序" class="headerlink" title="别名、代码页和整理次序"></a>别名、代码页和整理次序</h3><p><img src="/2020/04/04/db2/%E5%88%AB%E5%90%8D%E3%80%81%E4%BB%A3%E7%A0%81%E9%A1%B5%E5%92%8C%E6%95%B4%E7%90%86%E6%AC%A1%E5%BA%8F.png" alt="别名、代码页和整理次序.png"></p>
+<ul>
+<li>ALIAS db-alias为数据库指定别名</li>
+<li>CODESET(字符集)和TERRITORY(地域)用于指定代码页</li>
+<li>COLLATE指定数据库的整理次序</li>
+</ul>
+<h3 id="数据页与默认区的大小"><a href="#数据页与默认区的大小" class="headerlink" title="数据页与默认区的大小"></a>数据页与默认区的大小</h3><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E9%A1%B5%E4%B8%8E%E9%BB%98%E8%AE%A4%E5%8C%BA%E7%9A%84%E5%A4%A7%E5%B0%8F.png" alt="数据页与默认区的大小.png"></p>
+<ul>
+<li>PAGESIZE 指定数据库的表空间和缓冲池所使用的默认数据页大小</li>
+<li>DFT_EXTENT_SZ 指定数据库的表空间默认使用的区的大小</li>
+</ul>
+<h3 id="默认的表空间"><a href="#默认的表空间" class="headerlink" title="默认的表空间"></a>默认的表空间</h3><p><img src="/2020/04/04/db2/%E9%BB%98%E8%AE%A4%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="默认的表空间.png"></p>
+<ul>
+<li>SYSCATSPACE:用CATALOG TABLESPACE指定，存储DB2系统编目，即“数据字典”</li>
+<li>TEMPSPACE1:用TEMPORARY TABLESPACE指定，是DB2放置分组、排序、连接和重组等操作中间结果集的临时存储区域</li>
+<li>USERSPACE1:用USER TABLESPACE指定，默认情况下存储所有用户对象的表空间</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">注意：</span><br><span class="line">   1.要用实例用户登录；</span><br><span class="line">   2.记得创建相应的目录；</span><br><span class="line">   3.目录要改为实例的权限。</span><br><span class="line">查看是否创建成功：</span><br><span class="line">   db2 list db directory</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用向导创建数据库"><a href="#使用向导创建数据库" class="headerlink" title="使用向导创建数据库"></a>使用向导创建数据库</h2><h2 id="数据库的目录"><a href="#数据库的目录" class="headerlink" title="数据库的目录"></a>数据库的目录</h2><h3 id="数据库的目录-1"><a href="#数据库的目录-1" class="headerlink" title="数据库的目录"></a>数据库的目录</h3><ul>
+<li><p>数据库目录用于存储数据库的信息：如表空间、表、容器等信息</p>
+</li>
+<li><p>创建位置取决于创建数据库时指定的数据库路径</p>
+</li>
+<li><p>分区全局目录结构：db_path/instance_name/NODE0000/SQL00001</p>
+<p>—db_path:创建数据库时指定的路径</p>
+<p>—instance_name:与实例名相同的子目录</p>
+<p>—NODE0000:用于区分多分区数据库的逻辑分区</p>
+<p>—SQL00001:包含第一个数据库以及随后所创建数据库相关联的对象</p>
+</li>
+<li><p>特定成员目录：MEMBER0000</p>
+</li>
+</ul>
+<h3 id="分区全局目录"><a href="#分区全局目录" class="headerlink" title="分区全局目录"></a>分区全局目录</h3><p><img src="/2020/04/04/db2/%E5%88%86%E5%8C%BA%E5%85%A8%E5%B1%80%E7%9B%AE%E5%BD%95.png" alt="分区全局目录.png"></p>
+<ul>
+<li><p>表空间信息文件</p>
+<p>—SQLSPCS.1和SQLSPCS.2</p>
+</li>
+<li><p>存储器组控制文件</p>
+<p>—SQLSGF.1和SQLSGF.2</p>
+</li>
+<li><p>全局配置文件</p>
+<p>—SQLDBCONF</p>
+</li>
+<li><p>历史记录文件</p>
+<p>—DB2RHIST.ASC和DB2RHIST.BAK</p>
+</li>
+<li><p>与日志记录相关的文件</p>
+<p>—SQLOGCTL.GLFH.1和SQLOGCTL.GLFH.2</p>
+</li>
+<li><p>锁定文件</p>
+<p>—SQLINSLK和SQLTMPLK</p>
+</li>
+</ul>
+<h3 id="特定成员目录"><a href="#特定成员目录" class="headerlink" title="特定成员目录"></a>特定成员目录</h3><p><img src="/2020/04/04/db2/%E7%89%B9%E5%AE%9A%E6%88%90%E5%91%98%E7%9B%AE%E5%BD%95.png" alt="特定成员目录.png"></p>
+<ul>
+<li><p>缓冲池信息文件</p>
+<p>—SQLBP.1和SQLBP.2</p>
+</li>
+<li><p>本地事件监视器文件</p>
+</li>
+<li><p>与日志记录相关的文件</p>
+<p>—SQLOGCTL.LFH.1</p>
+<p>—SQLOGCTL.LFH.2</p>
+<p>—SQLOGCTL.LFH</p>
+</li>
+<li><p>本地配置文件</p>
+<p>—SQLDBCONF</p>
+</li>
+</ul>
+<h1 id="DB2表空间的管理"><a href="#DB2表空间的管理" class="headerlink" title="DB2表空间的管理"></a>DB2表空间的管理</h1><h2 id="了解表空间"><a href="#了解表空间" class="headerlink" title="了解表空间"></a>了解表空间</h2><h3 id="表空间的作用"><a href="#表空间的作用" class="headerlink" title="表空间的作用"></a>表空间的作用</h3><p><img src="/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E4%BD%9C%E7%94%A8.png" alt="表空间的作用.png"></p>
+<ul>
+<li>表空间是用户逻辑对象的存储空间</li>
+<li>表空间在物理层上对应若干个容器</li>
+<li>容器可以是目录、文件或者裸设备</li>
+<li>表空间是逻辑层与物理层的桥梁</li>
+<li>数据库可以有多个表空间，表空间可以有多个容器</li>
+</ul>
+<h3 id="表空间的类型"><a href="#表空间的类型" class="headerlink" title="表空间的类型"></a>表空间的类型</h3><ul>
+<li><p>目录表空间：</p>
+<p>—存储DB2系统编目，即“数据字典”</p>
+<p>—默认名称：syscatspace</p>
+</li>
+<li><p>系统临时表空间</p>
+<p>—用于存储分组、排序、连接、重组、创建索引等操作的中间结果</p>
+<p>—数据库至少有一个这样的表空间</p>
+<p>—默认创建的名称：tempspace1</p>
+</li>
+<li><p>用户临时表空间：</p>
+<p>—默认不会创建</p>
+<p>—存放使用DECLARE GLOBAL TEMPORARY TABLE </p>
+<p>​    或 CREATE GLOBAL TEMPORARY TABLE 语句创建的表的临时数据</p>
+</li>
+<li><p>用户表空间</p>
+<p>—存储用户对象（表、索引等）的空间</p>
+<p>—默认创建的名称：userspace1</p>
+</li>
+</ul>
+<h3 id="表空间的存储的类型"><a href="#表空间的存储的类型" class="headerlink" title="表空间的存储的类型"></a>表空间的存储的类型</h3><ul>
+<li>数据库支持三种存储类型的表空间</li>
+<li>系统管理的表空间（System-Managed Space,SMS）</li>
+<li>数据库管理的表空间（Database-Managed Space,DMS）</li>
+<li>自动存储的表空间（Automatic Storage With DMS）</li>
+<li>三种存储的表空间可以共存于同一个数据库</li>
+</ul>
+<h3 id="SMS表空间"><a href="#SMS表空间" class="headerlink" title="SMS表空间"></a>SMS表空间</h3><p><img src="/2020/04/04/db2/SMS%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="SMS表空间.png"></p>
+<ul>
+<li>表空间的容器是操作系统的目录或者文件夹</li>
+<li>空间的分配和管理由操作系统的文件系统来完成</li>
+<li>提供的优化选项比较少且性能不好</li>
+</ul>
+<h3 id="DMS表空间"><a href="#DMS表空间" class="headerlink" title="DMS表空间"></a>DMS表空间</h3><p><img src="/2020/04/04/db2/DMS%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="DMS表空间"></p>
+<ul>
+<li>表空间容器可以使用文件或者裸设备</li>
+<li>存储空间的分配和管理由数据库来完成</li>
+<li>DMS表空间可以被定义为大型（缺省）或常规表空间</li>
+</ul>
+<h3 id="自动存储管理的表空间"><a href="#自动存储管理的表空间" class="headerlink" title="自动存储管理的表空间"></a>自动存储管理的表空间</h3><ul>
+<li>数据库管理器负责创建和扩展容器</li>
+<li>将存储的管理由表空间层面转入数据库层面</li>
+<li>简化了表空间存储的管理</li>
+</ul>
+<h3 id="表空间大小的限制"><a href="#表空间大小的限制" class="headerlink" title="表空间大小的限制"></a>表空间大小的限制</h3><p><img src="/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F.png" alt="表空间大小.png"></p>
+<ul>
+<li>表空间的大小是有上限的</li>
+<li>表空间的页：4K,8K,16k,32k.</li>
+</ul>
+<h2 id="创建表空间"><a href="#创建表空间" class="headerlink" title="创建表空间"></a>创建表空间</h2><h3 id="创建表空间的语法"><a href="#创建表空间的语法" class="headerlink" title="创建表空间的语法"></a>创建表空间的语法</h3><p><img src="/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AF%AD%E6%B3%95_1.png" alt="创建表空间的语法_1.png"></p>
+<p><img src="/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AF%AD%E6%B3%95_2.png" alt="创建表空间的语法_2.png"></p>
+<h3 id="指定表空间类型和名称"><a href="#指定表空间类型和名称" class="headerlink" title="指定表空间类型和名称"></a>指定表空间类型和名称</h3><p><img src="/2020/04/04/db2/%E6%8C%87%E5%AE%9A%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%90%8D%E7%A7%B0.png" alt="指定表空间类型和名称.png"></p>
+<ul>
+<li>LARGE 创建大表空间</li>
+<li>REGULAR 创建常规表空间</li>
+<li>SYSTEM TEMPORARY 创建系统临时表空间</li>
+<li>USER TEMPORARY 用户临时表空间</li>
+<li>tablespace-name 指定表空间的名称，不能重名和以“SYS”开头</li>
+</ul>
+<h3 id="数据库分区组合数据页大小"><a href="#数据库分区组合数据页大小" class="headerlink" title="数据库分区组合数据页大小"></a>数据库分区组合数据页大小</h3><p><img src="/2020/04/04/db2/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%8C%BA%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E9%A1%B5%E5%A4%A7%E5%B0%8F.png" alt="数据库分区组合数据页大小.png"></p>
+<ul>
+<li>DATABASE PARTITION GROUP db-partition-group-name 为表空间指定数据库分区组</li>
+<li>PAGESIZE 指定表空间使用的数据页大小</li>
+</ul>
+<h3 id="表空间存储的管理方式和区大小"><a href="#表空间存储的管理方式和区大小" class="headerlink" title="表空间存储的管理方式和区大小"></a>表空间存储的管理方式和区大小</h3><p><img src="/2020/04/04/db2/%E8%A1%A8%E7%A9%BA%E9%97%B4%E5%AD%98%E5%82%A8%E7%9A%84%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F%E5%92%8C%E5%8C%BA%E5%A4%A7%E5%B0%8F.png" alt="表空间存储的管理方式和区大小.png"></p>
+<ul>
+<li>MANAGED BY 指定表空间存储的管理方式</li>
+<li>EXTENTSIZE 指定表空间区的大小</li>
+</ul>
+<h3 id="预取页的大小与缓冲池"><a href="#预取页的大小与缓冲池" class="headerlink" title="预取页的大小与缓冲池"></a>预取页的大小与缓冲池</h3><p><img src="/2020/04/04/db2/%E9%A2%84%E5%8F%96%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F%E4%B8%8E%E7%BC%93%E5%86%B2%E6%B1%A0.png" alt="预取页的大小与缓冲池.png"></p>
+<ul>
+<li>PREFETCHSIZE 指定预取页的个数</li>
+<li>BUFFERPOOL 指定表空间所使用的缓冲池</li>
+</ul>
+<h3 id="开销和传送速率"><a href="#开销和传送速率" class="headerlink" title="开销和传送速率"></a>开销和传送速率</h3><p><img src="/2020/04/04/db2/%E5%BC%80%E9%94%80%E5%92%8C%E4%BC%A0%E9%80%81%E9%80%9F%E7%8E%87.png" alt="开销和传送速率"></p>
+<ul>
+<li>用于确定查询优化期间的I/O成本，单位是毫秒</li>
+<li>Overhead=平均寻道时间+（（（1/磁盘转速）*60 *1000）/2)</li>
+<li>Transrate=(1/传送速率)* 1000 / 1024000 * 4096 (4096是指4k的页)</li>
+</ul>
+<h3 id="文件系统缓存和已删除表的恢复"><a href="#文件系统缓存和已删除表的恢复" class="headerlink" title="文件系统缓存和已删除表的恢复"></a>文件系统缓存和已删除表的恢复</h3><p><img src="/2020/04/04/db2/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%92%8C%E5%B7%B2%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84%E6%81%A2%E5%A4%8D.png" alt="文件系统缓存和已删除表的恢复"></p>
+<ul>
+<li>NO FILE SYSTEM CACHING 不使用文件系统的缓存特性</li>
+<li>FILE SYSTEM CACHING 使用文件系统的缓存特性</li>
+<li>DROPPED TABLE RECOVERY 设置是否启用已删除表的恢复特性</li>
+</ul>
+<h3 id="演示-1"><a href="#演示-1" class="headerlink" title="演示"></a>演示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.切换到数据库实例：su - db2inst2</span><br><span class="line">2.启动数据库实例：db2start</span><br><span class="line">3.查看当前数据库实例管理哪些数据库：db2 list db directory</span><br><span class="line">4.连接数据库：db2 connect to jikedb1</span><br></pre></td></tr></table></figure>
+
+<p>+++++++++++++++</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.创建表空间最简单的命令：</span><br><span class="line">  db2 create tablespace jikesimple;</span><br><span class="line">2.创建一个大型表空间：</span><br><span class="line">  db2 create large tablespace jikelarge;</span><br><span class="line">3.创建一个用户临时表空间：</span><br><span class="line">  db2 create user temporary tablespace jikeusertemp;</span><br><span class="line">4.创建一个8k页大小的表空间：</span><br><span class="line">  db2 create tablespace jike8k padesize 8k;</span><br><span class="line">5.创建一个数据库管理的表空间：</span><br><span class="line">  db2 &quot;create tablespace jikedms managed by database using (file &#39;&#x2F;dbpath&#x2F;jikedms01.dbf&#39; 10m,file &#39;&#x2F;dbpath.jikedms02.dbf&#39; 10m)&quot;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="维护表空间"><a href="#维护表空间" class="headerlink" title="维护表空间"></a>维护表空间</h2><h3 id="查看表空间"><a href="#查看表空间" class="headerlink" title="查看表空间"></a>查看表空间</h3><p><code>db2 list tablespaces [show detail]</code></p>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="查看表空间"></p>
+<h3 id="查看表空间的容器"><a href="#查看表空间的容器" class="headerlink" title="查看表空间的容器"></a>查看表空间的容器</h3><p><code>db2 list tablespace containers for tablespace_id [show detail]</code></p>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%AE%B9%E5%99%A8.png" alt="查看表空间的容器"></p>
+<h3 id="修改表空间"><a href="#修改表空间" class="headerlink" title="修改表空间"></a>修改表空间</h3><p><code>alter tablespace tablespace_name</code></p>
+<p><img src="/2020/04/04/db2/%E4%BF%AE%E6%94%B9%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="修改表空间"></p>
+<h3 id="添加容器"><a href="#添加容器" class="headerlink" title="添加容器"></a>添加容器</h3><p><code>db2 alter tablespace tablespace_name add(device &#39;dev/rhd1&#39; 1000,device &#39;dev/rhd2&#39; 1000);</code></p>
+<p><img src="/2020/04/04/db2/%E6%B7%BB%E5%8A%A0%E5%AE%B9%E5%99%A8.png" alt="添加容器.png"></p>
+<h3 id="扩展容器"><a href="#扩展容器" class="headerlink" title="扩展容器"></a>扩展容器</h3><p><code>db2 alter tablespace tablespace_name extend (all 1000);</code></p>
+<p><img src="/2020/04/04/db2/%E6%89%A9%E5%B1%95%E5%AE%B9%E5%99%A8.png" alt="扩展容器"></p>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p><code>db2 alter tablespace tablespace_name drop (file &#39;/db2path1/datafile1&#39;);</code></p>
+<p><img src="/2020/04/04/db2/%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8.png" alt="删除容器"></p>
+<h3 id="重命名表空间"><a href="#重命名表空间" class="headerlink" title="重命名表空间"></a>重命名表空间</h3><p><code>db2 rename tablespace_old to tablespace_new</code></p>
+<p><img src="/2020/04/04/db2/%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="重命名表空间"></p>
+<h3 id="删除表空间"><a href="#删除表空间" class="headerlink" title="删除表空间"></a>删除表空间</h3><p><code>db2 drop tablespace_name</code></p>
+<p><img src="/2020/04/04/db2/%E5%88%A0%E9%99%A4%E8%A1%A8%E7%A9%BA%E9%97%B4.png" alt="删除表空间"></p>
+<h3 id="演示-2"><a href="#演示-2" class="headerlink" title="演示"></a>演示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1.查看表空间</span><br><span class="line">  db2 list tablespaces</span><br><span class="line">  db2 list tablespaces detail</span><br><span class="line">2.查看表空间的容器</span><br><span class="line">  db2 list tablespace containers for 8</span><br><span class="line">  db2 list tablespace containers for 8 show detail</span><br><span class="line">3.为表空间添加一个容器</span><br><span class="line">  db2 &quot;alter tablespace jikedms add (file &#39;&#x2F;dbpath&#x2F;jikedms03.dbf&#39; 10m)&quot;</span><br><span class="line">4.修改容器的大小</span><br><span class="line">  db2 &quot;alter tablespace jikedms resize (file &#39;&#x2F;dbpath&#x2F;jikedms03.dbf&#39; 5m)&quot;</span><br><span class="line">5.删除容器</span><br><span class="line">  db2 &quot;alter tablespace jikedms drop (file &#39;&#x2F;dbpath&#x2F;jikedms03.dbf&#39;)&quot;</span><br><span class="line">6.重命名表空间</span><br><span class="line">  db2 rename tablespace jikedms to myjikedms;</span><br><span class="line">7.删除表空间</span><br><span class="line">  db2 drop tablespace myjikedms;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多温度存储器"><a href="#多温度存储器" class="headerlink" title="多温度存储器"></a>多温度存储器</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>DB2 V10 中新增加的特性</li>
+<li>将访问频率不同的数据放置在不同的存储空间中</li>
+<li>引入了存储组（Storage Group)的概念</li>
+<li>方便DBA对不同热度的数据进行管理</li>
+</ul>
+<h3 id="存储器组"><a href="#存储器组" class="headerlink" title="存储器组"></a>存储器组</h3><p><img src="/2020/04/04/db2/%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png" alt="存储器组"></p>
+<ul>
+<li>存储数据的存储路径的集合</li>
+<li>只有自动存储表空间才能使用存储器组</li>
+<li>一个表空间只能与一个存储器组相关联</li>
+<li>一个存储器组可以与多个表空间相关联</li>
+</ul>
+<h3 id="查看存储器组"><a href="#查看存储器组" class="headerlink" title="查看存储器组"></a>查看存储器组</h3><p><code>db2pd -db db_name -storagegroup</code></p>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png" alt="查看存储器组"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db2 &quot;select varchar(storage_group_name,20) as storage_group,</span><br><span class="line">     storage_group_id,</span><br><span class="line">     varchar(db_storage_path,20) as storage_path,</span><br><span class="line">     db_storage_path_state,</span><br><span class="line">     (fs_tatal_size &#x2F; 1000000) as total_path_MB,</span><br><span class="line">     (sto_path_free_size &#x2F; 1000000) as path_free_MB from </span><br><span class="line">     table(admin_get_storage_paths(&#39;&#39;,-1)) as T1&quot;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png" alt="查看存储器组"></p>
+<h3 id="创建存储器组"><a href="#创建存储器组" class="headerlink" title="创建存储器组"></a>创建存储器组</h3><p><img src="/2020/04/04/db2/%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png" alt="创建存储器组"></p>
+<h3 id="删除存储器组"><a href="#删除存储器组" class="headerlink" title="删除存储器组"></a>删除存储器组</h3><p><code>db2 drop stogroup storage_group_name</code></p>
+<p><img src="/2020/04/04/db2/%E5%88%A0%E9%99%A4%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84.png" alt="删除存储器组"></p>
+<h3 id="表空间与存储器组"><a href="#表空间与存储器组" class="headerlink" title="表空间与存储器组"></a>表空间与存储器组</h3><ul>
+<li><p>一个表空间只能与一个存储器组相关联</p>
+</li>
+<li><p>一个存储器组可以与多个表空间相关联</p>
+</li>
+<li><p>创建表空间时可以指定存储器组</p>
+<p>—<code>db2 create tablespace tablespace_name using stogroup storagegroup_name;</code></p>
+</li>
+<li><p>修改表空间使用存储器组</p>
+<p>—<code>db2 alter tablespace tablespace_name using stogroup storagegroup_name;</code></p>
+</li>
+</ul>
+<h3 id="查看表空间与存储器组的关系"><a href="#查看表空间与存储器组的关系" class="headerlink" title="查看表空间与存储器组的关系"></a>查看表空间与存储器组的关系</h3><p><code>db2 &quot;select TBSPACE,SGNAME,SGID from syscat.tablespaces&quot;;</code></p>
+<p><img src="/2020/04/04/db2/%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="查看表空间与存储器组的关系"></p>
+<h3 id="演示-3"><a href="#演示-3" class="headerlink" title="演示"></a>演示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">1.查看存储器组</span><br><span class="line">  &#96;db2pd -db jikedb1 -storagegroup&#96;</span><br><span class="line">   db2 &quot;select varchar(storage_group_name,20) as storage_group,</span><br><span class="line">     storage_group_id,</span><br><span class="line">     varchar(db_storage_path,20) as storage_path,</span><br><span class="line">     db_storage_path_state,</span><br><span class="line">     (fs_tatal_size &#x2F; 1000000) as total_path_MB,</span><br><span class="line">     (sto_path_free_size &#x2F; 1000000) as path_free_MB from </span><br><span class="line">     table(admin_get_storage_paths(&#39;&#39;,-1)) as T1&quot;;</span><br><span class="line">2.创建存储器组</span><br><span class="line">  db2 &quot;create stogroup sql on &#39;&#x2F;home&#x2F;db2inst2&#x2F;sqpath1&#39;&quot;</span><br><span class="line">3.创建表空间，指定存储组</span><br><span class="line">  db2 create tablespace jikets1 using stogroup sql;</span><br><span class="line">4.查看表空间和存储器组的关系</span><br><span class="line">  db2 &quot;select TBSPACE.SGNAME.SGID from syscat.tablespaces&quot;;</span><br><span class="line">5.删除存储器组</span><br><span class="line">  db2 drop stogroup sql</span><br><span class="line">6.修改表空间的存储器组</span><br><span class="line">  db2 alter tablespace jikets1 using stogroup IBMSTOGROUP;</span><br></pre></td></tr></table></figure>
+
+<h1 id="DB2数据库备份与恢复的相关概念"><a href="#DB2数据库备份与恢复的相关概念" class="headerlink" title="DB2数据库备份与恢复的相关概念"></a>DB2数据库备份与恢复的相关概念</h1><h2 id="备份的概念"><a href="#备份的概念" class="headerlink" title="备份的概念"></a>备份的概念</h2><h3 id="为什么要备份"><a href="#为什么要备份" class="headerlink" title="为什么要备份"></a>为什么要备份</h3><ul>
+<li><p>数据丢失的情况：</p>
+<p>—介质或存储器故障</p>
+<p>—数据库实例崩溃</p>
+<p>—应用程序错误</p>
+<p>—灾难：地震、火灾等</p>
+<p>—人员误操作</p>
+</li>
+</ul>
+<h3 id="备份的层级"><a href="#备份的层级" class="headerlink" title="备份的层级"></a>备份的层级</h3><p><img src="/2020/04/04/db2/%E5%A4%87%E4%BB%BD%E7%9A%84%E5%B1%82%E7%BA%A7.png" alt="备份的层级"></p>
+<ul>
+<li>数据库</li>
+<li>表空间</li>
+<li>对象层</li>
+<li>物理层</li>
+</ul>
+<h3 id="备份的类型"><a href="#备份的类型" class="headerlink" title="备份的类型"></a>备份的类型</h3><h4 id="脱机-离线（offline）备份×"><a href="#脱机-离线（offline）备份×" class="headerlink" title="脱机/离线（offline）备份×"></a>脱机/离线（offline）备份×</h4><ul>
+<li>断开数据库的连接</li>
+<li>备份时间短</li>
+</ul>
+<h4 id="在线（online）备份-√"><a href="#在线（online）备份-√" class="headerlink" title="在线（online）备份 √"></a>在线（online）备份 √</h4><ul>
+<li>业务正常访问</li>
+<li>备份时间相对较长</li>
+</ul>
+<h4 id="全量（full）备份"><a href="#全量（full）备份" class="headerlink" title="全量（full）备份"></a>全量（full）备份</h4><ul>
+<li>备份数据库的所有数据</li>
+</ul>
+<h4 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h4><p>（cumulative\incremental backup)</p>
+<ul>
+<li>备份数据库最近成功全量备份后所有更改的数据</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD.png" alt="增量备份"></p>
+<h4 id="变量增量（Delta）备份"><a href="#变量增量（Delta）备份" class="headerlink" title="变量增量（Delta）备份"></a>变量增量（Delta）备份</h4><ul>
+<li>备份最近一次成功备份后所有更改过的数据</li>
+</ul>
+<p><img src="/2020/04/04/db2/%E5%8F%98%E9%87%8F%E5%A2%9E%E9%87%8F%EF%BC%88Delta%EF%BC%89%E5%A4%87%E4%BB%BD.png" alt="变量增量（Delta）备份"></p>
+<h4 id="全量备份、增量备份、delta备份的综合使用"><a href="#全量备份、增量备份、delta备份的综合使用" class="headerlink" title="全量备份、增量备份、delta备份的综合使用"></a>全量备份、增量备份、delta备份的综合使用</h4><p><img src="/2020/04/04/db2/%E5%A4%87%E4%BB%BD%E7%9A%84%E7%BB%BC%E5%90%88%E4%BD%BF%E7%94%A8.png" alt="备份的综合使用"></p>
+<h2 id="恢复的概念"><a href="#恢复的概念" class="headerlink" title="恢复的概念"></a>恢复的概念</h2><h3 id="恢复的类型"><a href="#恢复的类型" class="headerlink" title="恢复的类型"></a>恢复的类型</h3><p><img src="/2020/04/04/db2/%E6%81%A2%E5%A4%8D%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="恢复的类型"></p>
+<h4 id="崩溃恢复"><a href="#崩溃恢复" class="headerlink" title="崩溃恢复"></a>崩溃恢复</h4><p><img src="/2020/04/04/db2/%E5%B4%A9%E6%BA%83%E6%81%A2%E5%A4%8D.png" alt="崩溃恢复"></p>
+<ul>
+<li><p>必须执行崩溃恢复的情况</p>
+<p>—异常断电导致数据库管理器和数据库分区崩溃</p>
+<p>—硬件故障，例如内存、磁盘、CPU或网络故障</p>
+<p>—导致DB2实例异常结束的严重操作系统错误</p>
+</li>
+<li><p>崩溃恢复</p>
+<p>—数据库异常结束，数据库管理器会自动启动崩溃恢复一尝试恢复数据库</p>
+<p>—保护数据在事务（也称为工作单元）意外中断后不会处于不一致或不可用的状态</p>
+</li>
+</ul>
+<h4 id="版本恢复"><a href="#版本恢复" class="headerlink" title="版本恢复"></a>版本恢复</h4><p><img src="/2020/04/04/db2/%E7%89%88%E6%9C%AC%E6%81%A2%E5%A4%8D.png" alt="版本恢复"></p>
+<ul>
+<li>使用备份操作期间创建的映像来复原数据库的先前版本</li>
+<li>数据库备份使您可以将数据库复原到与进行备份使完全相同的状态</li>
+<li>但是，从备份时间到故障时间之间的每个工作单元都将丢失</li>
+</ul>
+<h4 id="前滚恢复"><a href="#前滚恢复" class="headerlink" title="前滚恢复"></a>前滚恢复</h4><p><img src="/2020/04/04/db2/%E5%89%8D%E6%BB%9A%E6%81%A2%E5%A4%8D.png" alt="前滚恢复"></p>
+<ul>
+<li>要使用前滚恢复方法，必须已建立数据库的备份，并且使用了归档日志</li>
+</ul>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p><img src="/2020/04/04/db2/%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E5%8A%A1" alt="什么是事务"></p>
+<ul>
+<li>一个操作序列，这些操作要么都执行，要么都不执行，它是一个不可分割的工作单元</li>
+<li>并发控制的基本单位</li>
+</ul>
+<h3 id="事务的ACID特性"><a href="#事务的ACID特性" class="headerlink" title="事务的ACID特性"></a>事务的ACID特性</h3><h2 id="DB2的日志"><a href="#DB2的日志" class="headerlink" title="DB2的日志"></a>DB2的日志</h2>
+    </div>
+
+    
+    
+    
+     
+     <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/db2/" rel="tag"><i class="fa fa-tag"></i> db2</a>
+            
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/31/hexo%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" rel="prev" title="hexo使用手册">
+      <i class="fa fa-chevron-left"></i> hexo使用手册
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/04/git/" rel="next" title="git">
+      git <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DB2简介"><span class="nav-number">1.</span> <span class="nav-text">DB2简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DB2支持的平台及版本"><span class="nav-number">2.</span> <span class="nav-text">DB2支持的平台及版本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#支持的平台"><span class="nav-number">2.1.</span> <span class="nav-text">支持的平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本"><span class="nav-number">2.2.</span> <span class="nav-text">版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DB2主要的产品组件及功能"><span class="nav-number">3.</span> <span class="nav-text">DB2主要的产品组件及功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DB2体系结构简介"><span class="nav-number">4.</span> <span class="nav-text">DB2体系结构简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DB2体系结构简图"><span class="nav-number">4.1.</span> <span class="nav-text">DB2体系结构简图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库管理实例"><span class="nav-number">4.2.</span> <span class="nav-text">数据库管理实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">4.3.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表空间"><span class="nav-number">4.4.</span> <span class="nav-text">表空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表"><span class="nav-number">4.5.</span> <span class="nav-text">表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例—查看各组件"><span class="nav-number">4.6.</span> <span class="nav-text">示例—查看各组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DB2实例与管理服务器"><span class="nav-number">5.</span> <span class="nav-text">DB2实例与管理服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#理解实例"><span class="nav-number">5.1.</span> <span class="nav-text">理解实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例的概念"><span class="nav-number">5.1.1.</span> <span class="nav-text">实例的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建几个实例合适"><span class="nav-number">5.1.2.</span> <span class="nav-text">创建几个实例合适</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理实例"><span class="nav-number">5.2.</span> <span class="nav-text">管理实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建实例"><span class="nav-number">5.2.1.</span> <span class="nav-text">创建实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例与操作系统用户的关系"><span class="nav-number">5.2.1.1.</span> <span class="nav-text">实例与操作系统用户的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建实例的语法—Linux-amp-Unix"><span class="nav-number">5.2.1.2.</span> <span class="nav-text">创建实例的语法—Linux&amp;Unix</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建实例的语法—Windows"><span class="nav-number">5.2.1.3.</span> <span class="nav-text">创建实例的语法—Windows</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建实例示例"><span class="nav-number">5.2.1.4.</span> <span class="nav-text">创建实例示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动实例"><span class="nav-number">5.2.2.</span> <span class="nav-text">启动实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接和断开实例"><span class="nav-number">5.2.3.</span> <span class="nav-text">连接和断开实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停止实例"><span class="nav-number">5.2.4.</span> <span class="nav-text">停止实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例参数"><span class="nav-number">5.2.5.</span> <span class="nav-text">实例参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除实例"><span class="nav-number">5.2.6.</span> <span class="nav-text">删除实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作实例的其他命令"><span class="nav-number">5.2.7.</span> <span class="nav-text">操作实例的其他命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DB2的环境变量"><span class="nav-number">5.3.</span> <span class="nav-text">DB2的环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量的优先级"><span class="nav-number">5.3.1.</span> <span class="nav-text">环境变量的优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理实例注册变量"><span class="nav-number">5.3.2.</span> <span class="nav-text">管理实例注册变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例目录"><span class="nav-number">5.4.</span> <span class="nav-text">实例目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念与作用"><span class="nav-number">5.4.1.</span> <span class="nav-text">概念与作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例目录的内容"><span class="nav-number">5.4.2.</span> <span class="nav-text">实例目录的内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理服务器"><span class="nav-number">5.5.</span> <span class="nav-text">管理服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念与作用-1"><span class="nav-number">5.5.1.</span> <span class="nav-text">概念与作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理命令"><span class="nav-number">5.5.2.</span> <span class="nav-text">管理命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#演示"><span class="nav-number">5.6.</span> <span class="nav-text">演示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建数据库"><span class="nav-number">6.</span> <span class="nav-text">创建数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建库前的准备"><span class="nav-number">6.1.</span> <span class="nav-text">建库前的准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库、表空间、表的关系"><span class="nav-number">6.1.1.</span> <span class="nav-text">数据库、表空间、表的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表空间、容器、区与数据页"><span class="nav-number">6.1.2.</span> <span class="nav-text">表空间、容器、区与数据页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器与表空间"><span class="nav-number">6.1.3.</span> <span class="nav-text">容器与表空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用命令行创建数据库"><span class="nav-number">6.2.</span> <span class="nav-text">使用命令行创建数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据库的语法"><span class="nav-number">6.2.1.</span> <span class="nav-text">创建数据库的语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库的名称和分区"><span class="nav-number">6.2.2.</span> <span class="nav-text">数据库的名称和分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库和自动存储的位置（1）"><span class="nav-number">6.2.3.</span> <span class="nav-text">数据库和自动存储的位置（1）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库和自动存储的位置（2）"><span class="nav-number">6.2.4.</span> <span class="nav-text">数据库和自动存储的位置（2）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#别名、代码页和整理次序"><span class="nav-number">6.2.5.</span> <span class="nav-text">别名、代码页和整理次序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据页与默认区的大小"><span class="nav-number">6.2.6.</span> <span class="nav-text">数据页与默认区的大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认的表空间"><span class="nav-number">6.2.7.</span> <span class="nav-text">默认的表空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用向导创建数据库"><span class="nav-number">6.3.</span> <span class="nav-text">使用向导创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的目录"><span class="nav-number">6.4.</span> <span class="nav-text">数据库的目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库的目录-1"><span class="nav-number">6.4.1.</span> <span class="nav-text">数据库的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分区全局目录"><span class="nav-number">6.4.2.</span> <span class="nav-text">分区全局目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特定成员目录"><span class="nav-number">6.4.3.</span> <span class="nav-text">特定成员目录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DB2表空间的管理"><span class="nav-number">7.</span> <span class="nav-text">DB2表空间的管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解表空间"><span class="nav-number">7.1.</span> <span class="nav-text">了解表空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表空间的作用"><span class="nav-number">7.1.1.</span> <span class="nav-text">表空间的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表空间的类型"><span class="nav-number">7.1.2.</span> <span class="nav-text">表空间的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表空间的存储的类型"><span class="nav-number">7.1.3.</span> <span class="nav-text">表空间的存储的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMS表空间"><span class="nav-number">7.1.4.</span> <span class="nav-text">SMS表空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DMS表空间"><span class="nav-number">7.1.5.</span> <span class="nav-text">DMS表空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动存储管理的表空间"><span class="nav-number">7.1.6.</span> <span class="nav-text">自动存储管理的表空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表空间大小的限制"><span class="nav-number">7.1.7.</span> <span class="nav-text">表空间大小的限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建表空间"><span class="nav-number">7.2.</span> <span class="nav-text">创建表空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建表空间的语法"><span class="nav-number">7.2.1.</span> <span class="nav-text">创建表空间的语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定表空间类型和名称"><span class="nav-number">7.2.2.</span> <span class="nav-text">指定表空间类型和名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库分区组合数据页大小"><span class="nav-number">7.2.3.</span> <span class="nav-text">数据库分区组合数据页大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表空间存储的管理方式和区大小"><span class="nav-number">7.2.4.</span> <span class="nav-text">表空间存储的管理方式和区大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预取页的大小与缓冲池"><span class="nav-number">7.2.5.</span> <span class="nav-text">预取页的大小与缓冲池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开销和传送速率"><span class="nav-number">7.2.6.</span> <span class="nav-text">开销和传送速率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统缓存和已删除表的恢复"><span class="nav-number">7.2.7.</span> <span class="nav-text">文件系统缓存和已删除表的恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#演示-1"><span class="nav-number">7.2.8.</span> <span class="nav-text">演示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#维护表空间"><span class="nav-number">7.3.</span> <span class="nav-text">维护表空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看表空间"><span class="nav-number">7.3.1.</span> <span class="nav-text">查看表空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看表空间的容器"><span class="nav-number">7.3.2.</span> <span class="nav-text">查看表空间的容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改表空间"><span class="nav-number">7.3.3.</span> <span class="nav-text">修改表空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加容器"><span class="nav-number">7.3.4.</span> <span class="nav-text">添加容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展容器"><span class="nav-number">7.3.5.</span> <span class="nav-text">扩展容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除容器"><span class="nav-number">7.3.6.</span> <span class="nav-text">删除容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重命名表空间"><span class="nav-number">7.3.7.</span> <span class="nav-text">重命名表空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除表空间"><span class="nav-number">7.3.8.</span> <span class="nav-text">删除表空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#演示-2"><span class="nav-number">7.3.9.</span> <span class="nav-text">演示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多温度存储器"><span class="nav-number">7.4.</span> <span class="nav-text">多温度存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">7.4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器组"><span class="nav-number">7.4.2.</span> <span class="nav-text">存储器组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看存储器组"><span class="nav-number">7.4.3.</span> <span class="nav-text">查看存储器组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建存储器组"><span class="nav-number">7.4.4.</span> <span class="nav-text">创建存储器组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除存储器组"><span class="nav-number">7.4.5.</span> <span class="nav-text">删除存储器组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表空间与存储器组"><span class="nav-number">7.4.6.</span> <span class="nav-text">表空间与存储器组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看表空间与存储器组的关系"><span class="nav-number">7.4.7.</span> <span class="nav-text">查看表空间与存储器组的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#演示-3"><span class="nav-number">7.4.8.</span> <span class="nav-text">演示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DB2数据库备份与恢复的相关概念"><span class="nav-number">8.</span> <span class="nav-text">DB2数据库备份与恢复的相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#备份的概念"><span class="nav-number">8.1.</span> <span class="nav-text">备份的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要备份"><span class="nav-number">8.1.1.</span> <span class="nav-text">为什么要备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份的层级"><span class="nav-number">8.1.2.</span> <span class="nav-text">备份的层级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份的类型"><span class="nav-number">8.1.3.</span> <span class="nav-text">备份的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#脱机-离线（offline）备份×"><span class="nav-number">8.1.3.1.</span> <span class="nav-text">脱机&#x2F;离线（offline）备份×</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在线（online）备份-√"><span class="nav-number">8.1.3.2.</span> <span class="nav-text">在线（online）备份 √</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全量（full）备份"><span class="nav-number">8.1.3.3.</span> <span class="nav-text">全量（full）备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#增量备份"><span class="nav-number">8.1.3.4.</span> <span class="nav-text">增量备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量增量（Delta）备份"><span class="nav-number">8.1.3.5.</span> <span class="nav-text">变量增量（Delta）备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全量备份、增量备份、delta备份的综合使用"><span class="nav-number">8.1.3.6.</span> <span class="nav-text">全量备份、增量备份、delta备份的综合使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复的概念"><span class="nav-number">8.2.</span> <span class="nav-text">恢复的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#恢复的类型"><span class="nav-number">8.2.1.</span> <span class="nav-text">恢复的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#崩溃恢复"><span class="nav-number">8.2.1.1.</span> <span class="nav-text">崩溃恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#版本恢复"><span class="nav-number">8.2.1.2.</span> <span class="nav-text">版本恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前滚恢复"><span class="nav-number">8.2.1.3.</span> <span class="nav-text">前滚恢复</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">8.3.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是事务"><span class="nav-number">8.3.1.</span> <span class="nav-text">什么是事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的ACID特性"><span class="nav-number">8.3.2.</span> <span class="nav-text">事务的ACID特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DB2的日志"><span class="nav-number">8.4.</span> <span class="nav-text">DB2的日志</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">YHE3YAO</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YHE3YAO</span>
+</div>
+  <div class="powered-by">
+     <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+     本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共4.9k字</span>
+</div>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
